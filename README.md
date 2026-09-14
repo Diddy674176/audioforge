@@ -1,2 +1,50 @@
-# audioforge
-AudioForge — mobile-first real-time Web Audio music editor (browser, privacy-local)
+# AudioForge
+
+**Real-time, mobile-first music editor** in the browser. Upload MP3/WAV/OGG/M4A, tweak EQ, reverb, speed, bass, and export — all on-device.
+
+🔒 **Your audio stays on your device.** No accounts. No uploads.
+
+## Live demo
+
+After GitHub Pages is enabled:
+
+**https://diddy674176.github.io/audioforge/**
+
+## Features
+
+- Upload MP3, WAV, OGG, M4A (and browser-supported formats)
+- Waveform with seek, zoom, trim, loop, fade, reverse
+- Live Web Audio graph: volume, gain, 9-band EQ, bass boost, treble/mids, filters, reverb, delay, chorus, distortion, saturation, compressor, stereo width, pan, 8D
+- Speed 0.25×–2× and pitch ±12 semitones with **Preserve Pitch** (SoundTouchJS)
+- Presets: Slowed, Slowed+Reverb, Nightcore, Bass Boost, Lo-Fi, 8D, Vocal Boost, and more
+- A/B compare, bypass, undo/redo
+- Export WAV / MP3 (lamejs) offline with progress
+- IndexedDB projects + custom presets
+- Installable PWA
+
+## Local development
+
+```bash
+npm install
+npm run dev
+```
+
+## Production build
+
+```bash
+npm run build
+npm run preview
+```
+
+`base` is set to `/audioforge/` for GitHub Pages.
+
+## Enable GitHub Pages
+
+1. Repo **Settings → Pages**
+2. Source: **GitHub Actions**
+3. Push to `main` (workflow: `.github/workflows/deploy-pages.yml`)
+4. Open https://diddy674176.github.io/audioforge/
+
+## Privacy
+
+All decoding, effects, and export run in your browser via the Web Audio API. Audio is never sent to a server.
