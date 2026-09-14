@@ -1,0 +1,114 @@
+[
+  {
+    "path": "src/components/Transport.tsx",
+    "encoding": "base64",
+    "parts": [
+      "src__components__Transport.tsx.b64"
+    ]
+  },
+  {
+    "path": "src/components/Uploader.tsx",
+    "encoding": "base64",
+    "parts": [
+      "src__components__Uploader.tsx.b64"
+    ]
+  },
+  {
+    "path": "src/components/PresetsPanel.tsx",
+    "encoding": "base64",
+    "parts": [
+      "src__components__PresetsPanel.tsx.b64"
+    ]
+  },
+  {
+    "path": "src/components/ExportPanel.tsx",
+    "encoding": "base64",
+    "parts": [
+      "src__components__ExportPanel.tsx.b64"
+    ]
+  },
+  {
+    "path": "src/components/Waveform.tsx",
+    "encoding": "base64",
+    "parts": [
+      "src__components__Waveform.tsx.b64"
+    ]
+  },
+  {
+    "path": "src/components/Visualizer.tsx",
+    "encoding": "base64",
+    "parts": [
+      "src__components__Visualizer.tsx.0.b64",
+      "src__components__Visualizer.tsx.1.b64"
+    ]
+  },
+  {
+    "path": "src/components/MobileNav.tsx",
+    "encoding": "base64",
+    "parts": [
+      "src__components__MobileNav.tsx.b64"
+    ]
+  },
+  {
+    "path": "src/App.tsx",
+    "encoding": "base64",
+    "parts": [
+      "src__App.tsx.b64"
+    ]
+  },
+  {
+    "path": "src/audio/presets.ts",
+    "encoding": "base64",
+    "parts": [
+      "src__audio__presets.ts.0.b64",
+      "src__audio__presets.ts.1.b64",
+      "src__audio__presets.ts.2.b64",
+      "src__audio__presets.ts.3.b64",
+      "src__audio__presets.ts.4.b64"
+    ]
+  },
+  {
+    "path": "src/styles/app.css",
+    "encoding": "base64",
+    "parts": [
+      "src__styles__app.css.0.b64",
+      "src__styles__app.css.1.b64",
+      "src__styles__app.css.2.b64"
+    ]
+  },
+  {
+    "path": "src/audio/AudioEngine.ts",
+    "encoding": "base64",
+    "parts": [
+      "src__audio__AudioEngine.ts.0.b64",
+      "src__audio__AudioEngine.ts.1.b64",
+      "src__audio__AudioEngine.ts.2.b64",
+      "src__audio__AudioEngine.ts.3.b64",
+      "src__audio__AudioEngine.ts.4.b64"
+    ]
+  },
+  {
+    "path": "src/audio/exportAudio.ts",
+    "encoding": "base64",
+    "parts": [
+      "src__audio__exportAudio.ts.0.b64",
+      "src__audio__exportAudio.ts.1.b64"
+    ]
+  },
+  {
+    "path": "src/components/EffectsPanel.tsx",
+    "encoding": "base64",
+    "parts": [
+      "src__components__EffectsPanel.tsx.0.b64",
+      "src__components__EffectsPanel.tsx.1.b64",
+      "src__components__EffectsPanel.tsx.2.b64"
+    ]
+  },
+  {
+    "path": "README.md",
+    "encoding": "base64",
+    "parts": [
+      "README.md.b64"
+    ]
+  }
+]
