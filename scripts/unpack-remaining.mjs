@@ -16,9 +16,7 @@ if (!parts.length) {
   if (fs.existsSync(single)) parts.push(fs.readFileSync(single, 'utf8').replace(/\s+/g, ''));
 }
 if (!parts.length) { console.log('nothing to unpack'); process.exit(0); }
-let b64 = parts.join('');
-// Heal known MCP transcription typos if present (harmless no-ops when already correct)
-b64 = b64.replaceAll('YL8fBJ2BsPD', 'YL8fBK2BsPD').replaceAll('CrAPmpi7PY', 'CrAPspi7PY');
+const b64 = parts.join('');
 const tarPath = path.join(__dirname, 'remaining.tar.gz');
 fs.writeFileSync(tarPath, Buffer.from(b64, 'base64'));
 execSync(`tar xzf "${tarPath}" -C "${root}"`, { stdio: 'inherit' });
