@@ -5,6 +5,24 @@ import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.dirname(__dirname);
+
+// 1) polish*.b64 tarball (studio polish pack)
+const polish = [];
+for (let i = 0; ; i++) {
+  const f = path.join(__dirname, 'polish' + i + '.b64');
+  if (!fs.existsSync(f)) break;
+  polish.push(fs.readFileSync(f, 'utf8').replace(/\s+/g, ''));
+}
+if (polish.length) {
+  const tarPath = path.join(__dirname, 'polish.tar.gz');
+  fs.writeFileSync(tarPath, Buffer.from(polish.join(''), 'base64'));
+  execSync(`tar xzf "${tarPath}" -C "${root}"`, { stdio: 'inherit' });
+  fs.unlinkSync(tarPath);
+  console.log('unpacked polish sources');
+  process.exit(0);
+}
+
+// 2) srcparts manifest
 const partsDir = path.join(__dirname, 'srcparts');
 const manifestPath = path.join(partsDir, 'manifest.json');
 if (fs.existsSync(manifestPath)) {
@@ -12,13 +30,18 @@ if (fs.existsSync(manifestPath)) {
   for (const entry of manifest) {
     const dest = path.join(root, entry.path);
     fs.mkdirSync(path.dirname(dest), { recursive: true });
-    const body = entry.parts.map((name) => fs.readFileSync(path.join(partsDir, name), 'utf8')).join('');
-    fs.writeFileSync(dest, body);
-    console.log('assembled', entry.path, body.length);
+    const joined = entry.parts.map((name) => fs.readFileSync(path.join(partsDir, name), 'utf8')).join('');
+    if (entry.encoding === 'base64') {
+      fs.writeFileSync(dest, Buffer.from(joined.replace(/\s+/g, ''), 'base64'));
+    } else {
+      fs.writeFileSync(dest, joined);
+    }
+    console.log('assembled', entry.path, fs.statSync(dest).size);
   }
   console.log('assembled sources from srcparts');
   process.exit(0);
 }
+
 const prefer = [
   'src/audio/AudioEngine.ts',
   'src/audio/exportAudio.ts',
@@ -29,6 +52,7 @@ if (prefer.every((f) => fs.existsSync(path.join(root, f)))) {
   console.log('skipping unpack; preferred sources already in repo');
   process.exit(0);
 }
+
 const parts = [];
 for (let i = 0; ; i++) {
   const f = path.join(__dirname, 'tpart' + i + '.b64');
