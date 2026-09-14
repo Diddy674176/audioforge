@@ -51,7 +51,7 @@ export const defaultSettings = (): AudioSettings => ({
   vocalReducer: false,
   eightD: false,
   eightDSpeed: 0.2,
-  eightDDepth: 0.85,
+  eightDDepth: 1,
   fadeIn: 0,
   fadeOut: 0,
   loop: false,

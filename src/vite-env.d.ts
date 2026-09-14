@@ -9,18 +9,7 @@ declare module 'lamejs' {
   }
 }
 
-declare module 'soundtouchjs' {
-  export class PitchShifter {
-    constructor(context: AudioContext, buffer: AudioBuffer, bufferSize: number, onEnd?: () => void);
-    tempo: number;
-    rate: number;
-    pitch: number;
-    pitchSemitones: number;
-    percentagePlayed: number;
-    duration: number;
-    connect(node: AudioNode): void;
-    disconnect(): void;
-    on(event: string, cb: (detail: unknown) => void): void;
-    off(event?: string): void;
-  }
+declare module '@soundtouchjs/audio-worklet/processor?url' {
+  const url: string;
+  export default url;
 }
