@@ -23,6 +23,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - run: node scripts/unpack-remaining.mjs
       - run: npm install
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
