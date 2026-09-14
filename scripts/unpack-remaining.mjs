@@ -9,14 +9,16 @@ const parts = [];
 for (let i = 0; ; i++) {
   const f = path.join(__dirname, 'tpart' + i + '.b64');
   if (!fs.existsSync(f)) break;
-  parts.push(fs.readFileSync(f, 'utf8'));
+  parts.push(fs.readFileSync(f, 'utf8').replace(/\s+/g, ''));
 }
 if (!parts.length) {
   const single = path.join(__dirname, 'remaining.tar.gz.b64');
-  if (fs.existsSync(single)) parts.push(fs.readFileSync(single, 'utf8'));
+  if (fs.existsSync(single)) parts.push(fs.readFileSync(single, 'utf8').replace(/\s+/g, ''));
 }
 if (!parts.length) { console.log('nothing to unpack'); process.exit(0); }
-const b64 = parts.join('');
+let b64 = parts.join('');
+// Heal known MCP transcription typos if present (harmless no-ops when already correct)
+b64 = b64.replaceAll('YL8fBJ2BsPD', 'YL8fBK2BsPD').replaceAll('CrAPmpi7PY', 'CrAPspi7PY');
 const tarPath = path.join(__dirname, 'remaining.tar.gz');
 fs.writeFileSync(tarPath, Buffer.from(b64, 'base64'));
 execSync(`tar xzf "${tarPath}" -C "${root}"`, { stdio: 'inherit' });
