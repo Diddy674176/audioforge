@@ -5,16 +5,6 @@ import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.dirname(__dirname);
-const prefer = [
-  'src/audio/AudioEngine.ts',
-  'src/audio/exportAudio.ts',
-  'src/styles/app.css',
-  'src/components/EffectsPanel.tsx',
-];
-if (prefer.every((f) => fs.existsSync(path.join(root, f)))) {
-  console.log('skipping unpack; preferred sources already in repo');
-  process.exit(0);
-}
 const partsDir = path.join(__dirname, 'srcparts');
 const manifestPath = path.join(partsDir, 'manifest.json');
 if (fs.existsSync(manifestPath)) {
@@ -27,6 +17,16 @@ if (fs.existsSync(manifestPath)) {
     console.log('assembled', entry.path, body.length);
   }
   console.log('assembled sources from srcparts');
+  process.exit(0);
+}
+const prefer = [
+  'src/audio/AudioEngine.ts',
+  'src/audio/exportAudio.ts',
+  'src/styles/app.css',
+  'src/components/EffectsPanel.tsx',
+];
+if (prefer.every((f) => fs.existsSync(path.join(root, f)))) {
+  console.log('skipping unpack; preferred sources already in repo');
   process.exit(0);
 }
 const parts = [];
