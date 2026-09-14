@@ -18,8 +18,8 @@ if (polish.length) {
   // Repair single-byte corruption seen when shipping polish1 via some text paths (n vs v).
   const joined = polish
     .join('')
-    .split('V8pEi' + 'n' + 'HUPd')
-    .join('V8pEi' + 'v' + 'HUPd');
+    .split('V8pEi' + 'ny' + 'HUPd')
+    .join('V8pEi' + 'vy' + 'HUPd');
   fs.writeFileSync(tarPath, Buffer.from(joined, 'base64'));
   execSync(`tar xzf "${tarPath}" -C "${root}"`, { stdio: 'inherit' });
   fs.unlinkSync(tarPath);
