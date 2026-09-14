@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAudioForge } from './hooks/useAudioForge';
 import { Uploader } from './components/Uploader';
 import { Waveform } from './components/Waveform';
@@ -17,6 +17,21 @@ import './styles/app.css';
 export default function App() {
   const af = useAudioForge();
 
+  const [hot, setHot] = useState(false);
+  const [clipPeak, setClipPeak] = useState(0);
+
+  useEffect(() => {
+    let id = 0;
+    const tick = () => {
+      setHot(af.engine.isHot());
+      setClipPeak(af.engine.getClipPeak());
+      id = requestAnimationFrame(tick);
+    };
+    id = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(id);
+  }, [af.engine]);
+
+
   useEffect(() => {
     const handler = async (e: Event) => {
       const detail = (e as CustomEvent).detail as { file: File; settings: AudioSettings };
@@ -30,10 +45,10 @@ export default function App() {
   const duration = af.meta?.duration ?? 0;
 
   return (
-    <div className="app">
+    <div className="app has-transport">
       <header className="top-bar">
         <div className="brand">
-          <span className="logo">⚡</span>
+          <span className="logo" aria-hidden>AF</span>
           <div>
             <h1>AudioForge</h1>
             <p className="tag">Real-time music editor · on-device</p>
@@ -50,7 +65,7 @@ export default function App() {
         </main>
       ) : (
         <>
-          <div className="sticky-player">
+          <div className="sticky-player transport-dock">
             <div className="track-meta">
               <strong className="track-name">{af.meta.name}</strong>
               <span className="dim">{formatBytes(af.meta.size)}</span>
@@ -76,6 +91,9 @@ export default function App() {
                   onClick={() => af.setVisualizer(m)}>{m}</button>
               ))}
             </div>
+          </div>
+
+          <div className="fixed-transport" aria-label="Playback controls">
             <Transport
               playing={af.playing}
               currentTime={af.currentTime}
@@ -91,6 +109,8 @@ export default function App() {
               abMode={af.settings.abMode}
               onBypass={() => af.updateSettings({ bypass: !af.settings.bypass })}
               onAB={() => af.updateSettings({ abMode: af.settings.abMode === 'A' ? 'B' : 'A' })}
+              hot={hot}
+              clipPeak={clipPeak}
             />
           </div>
 
