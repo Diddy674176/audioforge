@@ -15,7 +15,12 @@ for (let i = 0; ; i++) {
 }
 if (polish.length) {
   const tarPath = path.join(__dirname, 'polish.tar.gz');
-  fs.writeFileSync(tarPath, Buffer.from(polish.join(''), 'base64'));
+  // Repair single-byte corruption seen when shipping polish1 via some text paths (n vs v).
+  const joined = polish
+    .join('')
+    .split('V8pEi' + 'n' + 'HUPd')
+    .join('V8pEi' + 'v' + 'HUPd');
+  fs.writeFileSync(tarPath, Buffer.from(joined, 'base64'));
   execSync(`tar xzf "${tarPath}" -C "${root}"`, { stdio: 'inherit' });
   fs.unlinkSync(tarPath);
   console.log('unpacked polish sources');
