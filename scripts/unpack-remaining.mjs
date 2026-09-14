@@ -5,7 +5,6 @@ import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.dirname(__dirname);
-// Prefer checked-in sources when present (avoids stale/corrupt tpart bundles).
 const prefer = [
   'src/audio/AudioEngine.ts',
   'src/audio/exportAudio.ts',
@@ -14,6 +13,20 @@ const prefer = [
 ];
 if (prefer.every((f) => fs.existsSync(path.join(root, f)))) {
   console.log('skipping unpack; preferred sources already in repo');
+  process.exit(0);
+}
+const partsDir = path.join(__dirname, 'srcparts');
+const manifestPath = path.join(partsDir, 'manifest.json');
+if (fs.existsSync(manifestPath)) {
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  for (const entry of manifest) {
+    const dest = path.join(root, entry.path);
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    const body = entry.parts.map((name) => fs.readFileSync(path.join(partsDir, name), 'utf8')).join('');
+    fs.writeFileSync(dest, body);
+    console.log('assembled', entry.path, body.length);
+  }
+  console.log('assembled sources from srcparts');
   process.exit(0);
 }
 const parts = [];
