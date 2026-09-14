@@ -6,13 +6,13 @@
 
 ## Live demo
 
-After GitHub Pages is enabled:
-
 **https://diddy674176.github.io/audioforge/**
+
+> First-time setup: open **Settings → Pages → Source: GitHub Actions**, then re-run the **Deploy to GitHub Pages** workflow (or push any commit). CI already builds successfully; only the Pages environment needs enabling once.
 
 ## Features
 
-- Upload MP3, WAV, OGG, M4A (and browser-supported formats)
+- Upload MP3, WAV, OGG, M4A (browser-supported formats)
 - Waveform with seek, zoom, trim, loop, fade, reverse
 - Live Web Audio graph: volume, gain, 9-band EQ, bass boost, treble/mids, filters, reverb, delay, chorus, distortion, saturation, compressor, stereo width, pan, 8D
 - Speed 0.25×–2× and pitch ±12 semitones with **Preserve Pitch** (SoundTouchJS)
@@ -32,17 +32,20 @@ npm run dev
 ## Production build
 
 ```bash
+npm install
 npm run build
 npm run preview
 ```
 
 `base` is set to `/audioforge/` for GitHub Pages.
 
-## Enable GitHub Pages
+CI unpacks large sources via `node scripts/unpack-remaining.mjs` before `npm install` / `npm run build`.
+
+## Enable GitHub Pages (one-time)
 
 1. Repo **Settings → Pages**
 2. Source: **GitHub Actions**
-3. Push to `main` (workflow: `.github/workflows/deploy-pages.yml`)
+3. Actions → **Deploy to GitHub Pages** → **Run workflow** (or push to `main`)
 4. Open https://diddy674176.github.io/audioforge/
 
 ## Privacy
