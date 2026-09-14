@@ -15,11 +15,14 @@ interface Props {
   abMode: 'A' | 'B';
   onBypass: () => void;
   onAB: () => void;
+  hot?: boolean;
+  clipPeak?: number;
 }
 
 export function Transport({
   playing, currentTime, duration, onToggle, onRestart, onSkip,
   canUndo, canRedo, onUndo, onRedo, bypass, abMode, onBypass, onAB,
+  hot = false, clipPeak = 0,
 }: Props) {
   return (
     <div className="transport">
@@ -27,6 +30,11 @@ export function Transport({
         <span>{formatTime(currentTime)}</span>
         <span className="dim">/</span>
         <span className="dim">{formatTime(duration)}</span>
+        {hot && (
+          <span className="clip-indicator" title={'Peak ' + clipPeak.toFixed(2)} role="status">
+            CLIP
+          </span>
+        )}
       </div>
       <div className="transport-btns">
         <button type="button" className="btn-icon" onClick={onUndo} disabled={!canUndo} title="Undo">↶</button>
@@ -37,10 +45,10 @@ export function Transport({
           {playing ? '⏸' : '▶'}
         </button>
         <button type="button" className="btn-round" onClick={() => onSkip(5)} title="+5s">⏩</button>
-        <button type="button" className={`btn-chip ${abMode === 'A' ? 'active' : ''}`} onClick={onAB} title="A/B compare">
+        <button type="button" className={'btn-chip ' + (abMode === 'A' ? 'active' : '')} onClick={onAB} title="A/B compare">
           {abMode}
         </button>
-        <button type="button" className={`btn-chip ${bypass ? 'active warn' : ''}`} onClick={onBypass} title="Bypass all">
+        <button type="button" className={'btn-chip ' + (bypass ? 'active warn' : '')} onClick={onBypass} title="Bypass all">
           BYP
         </button>
       </div>
